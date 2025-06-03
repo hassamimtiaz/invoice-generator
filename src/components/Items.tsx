@@ -9,17 +9,13 @@ interface ItemErrors {
   price?: string;
 }
 
-const Items = () => {
-  const [items, setItems] = useState<InvoiceItem[]>(() => {
-    const savedItems = localStorage.getItem('invoiceItems');
-    return savedItems ? JSON.parse(savedItems) : [];
-  });
+interface ItemsProps {
+  items: InvoiceItem[];
+  onItemsChange: (items: InvoiceItem[]) => void;
+}
 
+const Items = ({ items, onItemsChange }: ItemsProps) => {
   const [errors, setErrors] = useState<{ [key: string]: ItemErrors }>({});
-
-  useEffect(() => {
-    localStorage.setItem('invoiceItems', JSON.stringify(items));
-  }, [items]);
 
   const validateItem = (item: InvoiceItem): ItemErrors => {
     const errors: ItemErrors = {};
@@ -51,7 +47,7 @@ const Items = () => {
       quantity: 1,
       price: 0
     };
-    setItems([...items, newItem]);
+    onItemsChange([...items, newItem]);
   };
 
   const updateItem = (id: string, field: keyof InvoiceItem, value: string | number) => {
@@ -67,11 +63,11 @@ const Items = () => {
       }
       return item;
     });
-    setItems(updatedItems);
+    onItemsChange(updatedItems);
   };
 
   const deleteItem = (id: string) => {
-    setItems(items.filter(item => item.id !== id));
+    onItemsChange(items.filter(item => item.id !== id));
     setErrors(prev => {
       const newErrors = { ...prev };
       delete newErrors[id];
@@ -85,6 +81,15 @@ const Items = () => {
         Items
         <button onClick={addItem}>Add Item</button>
       </h2>
+      {items.length > 0 && (
+        <div className="items-header">
+          <div>Item Name</div>
+          <div>Description</div>
+          <div>Quantity</div>
+          <div>Price</div>
+          <div></div>
+        </div>
+      )}
       <div className="items-list">
         {items.length === 0 ? (
           <div className="empty-state">No items added yet. Click "Add Item" to get started.</div>
@@ -99,6 +104,7 @@ const Items = () => {
                   value={item.name}
                   onChange={(e) => updateItem(item.id, 'name', e.target.value)}
                   maxLength={100}
+                  placeholder="Enter item name"
                 />
                 {errors[item.id]?.name && (
                   <span className="error">{errors[item.id].name}</span>
@@ -111,6 +117,7 @@ const Items = () => {
                   value={item.description}
                   onChange={(e) => updateItem(item.id, 'description', e.target.value)}
                   maxLength={500}
+                  placeholder="Enter item description"
                 />
                 {errors[item.id]?.description && (
                   <span className="error">{errors[item.id].description}</span>
