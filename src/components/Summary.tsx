@@ -6,35 +6,54 @@ interface SummaryProps {
   items: InvoiceItem[];
 }
 
+type Currency = {
+  code: string;
+  symbol: string;
+};
+
+const currencies: Currency[] = [
+  { code: 'USD', symbol: '$' },
+  { code: 'EUR', symbol: '€' },
+  { code: 'GBP', symbol: '£' },
+  { code: 'JPY', symbol: '¥' },
+  { code: 'PKR', symbol: 'Rs' }
+];
+
 const Summary = ({ items }: SummaryProps) => {
   const [taxRate, setTaxRate] = useState<number>(0);
+  const [discountRate, setDiscountRate] = useState<number>(0);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [tax, setTax] = useState<number>(0);
+  const [discount, setDiscount] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(currencies[0]);
 
   useEffect(() => {
     const calculatedSubtotal = items.reduce((sum, item) => {
       return sum + (item.quantity * item.price);
     }, 0);
     
-    const calculatedTax = (calculatedSubtotal * taxRate) / 100;
-    const calculatedTotal = calculatedSubtotal + calculatedTax;
+    const calculatedDiscount = (calculatedSubtotal * discountRate) / 100;
+    const subtotalAfterDiscount = calculatedSubtotal - calculatedDiscount;
+    const calculatedTax = (subtotalAfterDiscount * taxRate) / 100;
+    const calculatedTotal = subtotalAfterDiscount + calculatedTax;
 
     setSubtotal(calculatedSubtotal);
+    setDiscount(calculatedDiscount);
     setTax(calculatedTax);
     setTotal(calculatedTotal);
-  }, [items, taxRate]);
+  }, [items, taxRate, discountRate]);
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD',
+      currency: selectedCurrency.code,
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }).format(amount);
   };
 
-  const formatTaxRate = (value: number): string => {
+  const formatRate = (value: number): string => {
     return value === 0 ? '' : value.toString();
   };
 
@@ -47,6 +66,10 @@ const Summary = ({ items }: SummaryProps) => {
           <span className="value">{formatCurrency(subtotal)}</span>
         </div>
         <div className="row">
+          <span className="label">Discount</span>
+          <span className="value">-{formatCurrency(discount)}</span>
+        </div>
+        <div className="row">
           <span className="label">Tax</span>
           <span className="value">{formatCurrency(tax)}</span>
         </div>
@@ -55,13 +78,43 @@ const Summary = ({ items }: SummaryProps) => {
           <span className="value">{formatCurrency(total)}</span>
         </div>
       </div>
-      <div className="tax-settings">
+      <div className="rate-settings">
+        <div className="form-group">
+          <label htmlFor="currency">Currency</label>
+          <select
+            id="currency"
+            value={selectedCurrency.code}
+            onChange={(e) => {
+              const currency = currencies.find(c => c.code === e.target.value);
+              if (currency) setSelectedCurrency(currency);
+            }}
+          >
+            {currencies.map(currency => (
+              <option key={currency.code} value={currency.code}>
+                {currency.code} ({currency.symbol})
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="discountRate">Discount Rate (%)</label>
+          <input
+            type="number"
+            id="discountRate"
+            value={formatRate(discountRate)}
+            onChange={(e) => setDiscountRate(parseFloat(e.target.value) || 0)}
+            min="0"
+            max="100"
+            step="0.1"
+            placeholder="0.0"
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="taxRate">Tax Rate (%)</label>
           <input
             type="number"
             id="taxRate"
-            value={formatTaxRate(taxRate)}
+            value={formatRate(taxRate)}
             onChange={(e) => setTaxRate(parseFloat(e.target.value) || 0)}
             min="0"
             max="100"

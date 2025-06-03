@@ -39,6 +39,10 @@
         font-size: 1rem;
         font-weight: 500;
         color: #2d3748;
+
+        &:first-letter {
+          margin-right: 0.1em;
+        }
       }
 
       &.total {
@@ -60,11 +64,11 @@
     }
   }
 
-  .tax-settings {
+  .rate-settings {
     margin-top: 1rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 
     .form-group {
       display: flex;
@@ -75,20 +79,50 @@
         font-size: 0.875rem;
         color: #4a5568;
         font-weight: 500;
+        white-space: nowrap;
       }
 
-      input {
-        width: 80px;
+      input, select {
         padding: 0.5rem;
         border: 1px solid #ddd;
         border-radius: 6px;
         font-size: 0.875rem;
-        text-align: right;
+        background-color: white;
 
         &:focus {
           outline: none;
           border-color: #007bff;
           box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+      }
+
+      input {
+        width: 80px;
+        text-align: right;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        &[type=number] {
+          -moz-appearance: textfield;
+        }
+      }
+
+      select {
+        width: 120px;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 0.5rem center;
+        background-size: 1em;
+        padding-right: 2rem;
+
+        option {
+          color: #2d3748;
         }
       }
     }
