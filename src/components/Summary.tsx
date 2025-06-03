@@ -28,8 +28,14 @@ const Summary = ({ items }: SummaryProps) => {
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
     }).format(amount);
+  };
+
+  const formatTaxRate = (value: number): string => {
+    return value === 0 ? '' : value.toString();
   };
 
   return (
@@ -55,11 +61,12 @@ const Summary = ({ items }: SummaryProps) => {
           <input
             type="number"
             id="taxRate"
-            value={taxRate}
+            value={formatTaxRate(taxRate)}
             onChange={(e) => setTaxRate(parseFloat(e.target.value) || 0)}
             min="0"
             max="100"
             step="0.1"
+            placeholder="0.0"
           />
         </div>
       </div>

@@ -16,10 +16,12 @@ body {
 .app {
   min-height: 100vh;
   padding: 2rem;
+  display: flex;
+  justify-content: center;
 
   .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 1615px;
+    max-width: 1615px;
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
