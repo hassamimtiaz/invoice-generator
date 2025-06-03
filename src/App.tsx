@@ -1,5 +1,6 @@
 import InvoiceHeader from './components/InvoiceHeader'
 import BillingDetails from './components/BillingDetails'
+import Items from './components/Items'
 import './App.scss'
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
         <h1>Invoice Generator</h1>
         <InvoiceHeader />
         <BillingDetails />
+        <Items />
       </div>
     </div>
   )
