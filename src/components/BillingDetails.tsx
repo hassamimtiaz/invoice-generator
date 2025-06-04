@@ -5,27 +5,29 @@ interface BillingInfo {
   name: string;
   email: string;
   address: string;
+  phone: string;
+}
+
+interface BillingDetailsProps {
+  billFrom: BillingInfo;
+  billTo: BillingInfo;
+  onBillFromChange: (details: BillingInfo) => void;
+  onBillToChange: (details: BillingInfo) => void;
 }
 
 interface ValidationErrors {
   name?: string;
   email?: string;
   address?: string;
+  phone?: string;
 }
 
-const BillingDetails = () => {
-  const [billFrom, setBillFrom] = useState<BillingInfo>({
-    name: '',
-    email: '',
-    address: ''
-  });
-
-  const [billTo, setBillTo] = useState<BillingInfo>({
-    name: '',
-    email: '',
-    address: ''
-  });
-
+const BillingDetails = ({ 
+  billFrom, 
+  billTo, 
+  onBillFromChange, 
+  onBillToChange 
+}: BillingDetailsProps) => {
   const [fromErrors, setFromErrors] = useState<ValidationErrors>({});
   const [toErrors, setToErrors] = useState<ValidationErrors>({});
 
@@ -54,6 +56,12 @@ const BillingDetails = () => {
           return 'Address is required';
         }
         break;
+      case 'phone':
+        const phoneRegex = /^\+?[\d\s-]{10,}$/;
+        if (!phoneRegex.test(value)) {
+          return 'Please enter a valid phone number';
+        }
+        break;
     }
   };
 
@@ -61,32 +69,32 @@ const BillingDetails = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setBillFrom(prev => ({
-      ...prev,
-      [name]: value
-    }));
-
     const error = validateField(name, value);
     setFromErrors(prev => ({
       ...prev,
       [name]: error
     }));
+
+    onBillFromChange({
+      ...billFrom,
+      [name]: value
+    });
   };
 
   const handleBillToChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setBillTo(prev => ({
-      ...prev,
-      [name]: value
-    }));
-
     const error = validateField(name, value);
     setToErrors(prev => ({
       ...prev,
       [name]: error
     }));
+
+    onBillToChange({
+      ...billTo,
+      [name]: value
+    });
   };
 
   return (
@@ -101,7 +109,7 @@ const BillingDetails = () => {
             name="name"
             value={billFrom.name}
             onChange={handleBillFromChange}
-            placeholder="Your Company Name"
+            placeholder="Your Name or Company Name"
             maxLength={50}
           />
           {fromErrors.name && <span className="error">{fromErrors.name}</span>}
@@ -117,6 +125,18 @@ const BillingDetails = () => {
             placeholder="your@email.com"
           />
           {fromErrors.email && <span className="error">{fromErrors.email}</span>}
+        </div>
+        <div className="form-group">
+          <label htmlFor="fromPhone">Phone</label>
+          <input
+            type="tel"
+            id="fromPhone"
+            name="phone"
+            value={billFrom.phone}
+            onChange={handleBillFromChange}
+            placeholder="+1 234 567 8900"
+          />
+          {fromErrors.phone && <span className="error">{fromErrors.phone}</span>}
         </div>
         <div className="form-group">
           <label htmlFor="fromAddress">Address</label>
@@ -158,6 +178,18 @@ const BillingDetails = () => {
             placeholder="client@email.com"
           />
           {toErrors.email && <span className="error">{toErrors.email}</span>}
+        </div>
+        <div className="form-group">
+          <label htmlFor="toPhone">Phone</label>
+          <input
+            type="tel"
+            id="toPhone"
+            name="phone"
+            value={billTo.phone}
+            onChange={handleBillToChange}
+            placeholder="+1 234 567 8900"
+          />
+          {toErrors.phone && <span className="error">{toErrors.phone}</span>}
         </div>
         <div className="form-group">
           <label htmlFor="toAddress">Address</label>

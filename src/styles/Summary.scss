@@ -127,4 +127,76 @@
       }
     }
   }
+
+  .notes-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      color: #4a5568;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      resize: vertical;
+      background-color: white;
+      color: #2d3748;
+
+      &::placeholder {
+        color: #a0aec0;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+      }
+    }
+  }
+
+  .preview-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+    text-align: right;
+
+    .preview-button {
+      background-color: #0ea5e9;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:hover {
+        background-color: #0284c7;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.25);
+      }
+
+      &:active {
+        background-color: #0369a1;
+      }
+    }
+  }
 } 

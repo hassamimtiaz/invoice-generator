@@ -1,11 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import '../styles/InvoiceHeader.scss';
 
-const InvoiceHeader = () => {
-  const [invoiceNumber, setInvoiceNumber] = useState('INV-001');
-  const [invoiceDate, setInvoiceDate] = useState(format(new Date(), 'yyyy-MM-dd'));
-  const [dueDate, setDueDate] = useState(format(new Date(), 'yyyy-MM-dd'));
+interface InvoiceHeaderInfo {
+  invoiceNumber: string;
+  invoiceDate: string;
+  dueDate: string;
+}
+
+interface InvoiceHeaderProps {
+  headerInfo: InvoiceHeaderInfo;
+  onHeaderInfoChange: (info: InvoiceHeaderInfo) => void;
+}
+
+const InvoiceHeader = ({ headerInfo, onHeaderInfoChange }: InvoiceHeaderProps) => {
+  const handleChange = (field: keyof InvoiceHeaderInfo, value: string) => {
+    onHeaderInfoChange({
+      ...headerInfo,
+      [field]: value
+    });
+  };
 
   return (
     <div className="invoice-header">
@@ -15,8 +29,8 @@ const InvoiceHeader = () => {
           <input
             type="text"
             id="invoiceNumber"
-            value={invoiceNumber}
-            onChange={(e) => setInvoiceNumber(e.target.value)}
+            value={headerInfo.invoiceNumber}
+            onChange={(e) => handleChange('invoiceNumber', e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -24,8 +38,8 @@ const InvoiceHeader = () => {
           <input
             type="date"
             id="invoiceDate"
-            value={invoiceDate}
-            onChange={(e) => setInvoiceDate(e.target.value)}
+            value={headerInfo.invoiceDate}
+            onChange={(e) => handleChange('invoiceDate', e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -33,8 +47,8 @@ const InvoiceHeader = () => {
           <input
             type="date"
             id="dueDate"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
+            value={headerInfo.dueDate}
+            onChange={(e) => handleChange('dueDate', e.target.value)}
           />
         </div>
       </div>
