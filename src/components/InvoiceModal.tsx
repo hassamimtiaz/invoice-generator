@@ -238,7 +238,7 @@ const InvoiceModal: React.FC<InvoiceModalProps> = ({
               fileName={`invoice-${headerInfo.invoiceNumber}.pdf`}
               className="download-pdf-button"
             >
-              {({ blob, url, loading, error }) => (
+              {({ loading }) => (
                 <>
                   <DownloadIcon />
                   {loading ? 'Generating PDF...' : 'Download Invoice PDF'}
