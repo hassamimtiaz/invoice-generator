@@ -1,54 +1,129 @@
-# React + TypeScript + Vite
+# Invoice Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive invoice generator built with React, TypeScript, and Vite. Create, customize, and export professional invoices with ease.
 
-Currently, two official plugins are available:
+![Invoice Generator](public/screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- 🚀 Modern React with TypeScript
+- 💅 Clean and intuitive user interface
+- 📱 Fully responsive design
+- 💾 Local storage persistence
+- 📄 PDF export functionality
+- 💰 Multiple currency support
+- 🧮 Automatic calculations
+- 🎨 Professional styling
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Core Functionalities
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **Invoice Details Management**
+  - Custom invoice numbers
+  - Date selection
+  - Due date tracking
+
+- **Billing Information**
+  - Separate "Bill From" and "Bill To" sections
+  - Contact information storage
+  - Address management
+
+- **Item Management**
+  - Add/Edit/Delete line items
+  - Item descriptions
+  - Quantity and price calculations
+  - Automatic subtotal computation
+
+- **Financial Calculations**
+  - Tax rate customization
+  - Discount options
+  - Currency selection
+  - Automatic total calculation
+
+- **Export Options**
+  - Professional PDF generation
+  - Clean and organized layout
+  - Instant download
+
+## Tech Stack
+
+- React 18
+- TypeScript
+- Vite
+- SCSS
+- React PDF Renderer
+- Modern JavaScript features
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/hassamimtiaz/invoice-generator.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+2. Navigate to the project directory:
+```bash
+cd invoice-generator
 ```
+
+3. Install dependencies:
+```bash
+npm install
+```
+
+4. Start the development server:
+```bash
+npm run dev
+```
+
+5. Open your browser and visit:
+```
+http://localhost:5173
+```
+
+## Usage
+
+1. **Create New Invoice**
+   - Fill in the invoice header details
+   - Add your business information in "Bill From"
+   - Add client information in "Bill To"
+   - Add line items with descriptions and prices
+
+2. **Customize Calculations**
+   - Set tax rate
+   - Apply discounts
+   - Choose currency
+
+3. **Preview and Export**
+   - Click "Preview Invoice" to review
+   - Use "Download PDF" to export
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Hassam Imtiaz
+- GitHub: [@hassamimtiaz](https://github.com/hassamimtiaz)
+- Email: hassam2522@gmail.com
+
+## Acknowledgments
+
+- React community
+- Vite team
+- All contributors and users
+
+---
+
+Made with ❤️ by Hassam Imtiaz
