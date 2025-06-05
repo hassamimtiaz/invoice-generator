@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
-import type { ErrorInfo, ReactNode } from 'react';
+import React from 'react';
 
 interface Props {
-  children: ReactNode;
-  fallback?: ReactNode;
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
 }
 
 interface State {
@@ -11,40 +10,35 @@ interface State {
   error: Error | null;
 }
 
-class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false,
-    error: null
-  };
-
-  public static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+class ErrorBoundary extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hasError: false,
+      error: null
+    };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+  static getDerivedStateFromError(error: Error): State {
+    return {
+      hasError: true,
+      error
+    };
   }
 
-  public render() {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    console.error('Error caught by ErrorBoundary:', error, errorInfo);
+  }
+
+  render(): React.ReactNode {
     if (this.state.hasError) {
       return this.props.fallback || (
         <div className="error-boundary">
-          <h2>Something went wrong</h2>
-          <details>
-            <summary>Error details</summary>
-            <pre>{this.state.error?.toString()}</pre>
-          </details>
+          <h2>Something went wrong!</h2>
+          <p>{this.state.error?.message}</p>
           <button
             onClick={() => this.setState({ hasError: false, error: null })}
-            style={{
-              marginTop: '1rem',
-              padding: '0.5rem 1rem',
-              backgroundColor: '#007bff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
+            className="retry-button"
           >
             Try again
           </button>

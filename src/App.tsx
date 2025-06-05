@@ -1,4 +1,3 @@
-import React from 'react';
 import InvoiceHeader from './components/InvoiceHeader';
 import BillingDetails from './components/BillingDetails';
 import Items from './components/Items';
