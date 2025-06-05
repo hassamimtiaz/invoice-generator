@@ -94,7 +94,7 @@ const BillingDetails: React.FC<BillingDetailsProps> = ({
   };
 
   return (
-    <div className="billing-details">
+    <div className="billing-details-form">
       <div className="billing-section">
         <h3>Bill From</h3>
         <div className="form-group">

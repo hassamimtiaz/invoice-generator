@@ -58,8 +58,8 @@ const Summary: React.FC<SummaryProps> = ({
             <input
               type="number"
               id="taxRate"
-              value={summaryState.taxRate}
-              onChange={(e) => handleStateChange('taxRate', parseFloat(e.target.value) || 0)}
+              value={summaryState.taxRate === 0 ? '' : summaryState.taxRate}
+              onChange={(e) => handleStateChange('taxRate', e.target.value === '' ? 0 : parseFloat(e.target.value))}
               min="0"
               max="100"
               step="0.1"
@@ -71,8 +71,8 @@ const Summary: React.FC<SummaryProps> = ({
             <input
               type="number"
               id="discountRate"
-              value={summaryState.discountRate}
-              onChange={(e) => handleStateChange('discountRate', parseFloat(e.target.value) || 0)}
+              value={summaryState.discountRate === 0 ? '' : summaryState.discountRate}
+              onChange={(e) => handleStateChange('discountRate', e.target.value === '' ? 0 : parseFloat(e.target.value))}
               min="0"
               max="100"
               step="0.1"
