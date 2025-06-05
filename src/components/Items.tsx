@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import type { InvoiceItem } from '../types';
+import React from 'react';
+import type { ItemsProps, InvoiceItem } from '../types/interfaces';
 import '../styles/Items.scss';
 
 // Add TrashIcon component at the top level
@@ -16,13 +16,8 @@ interface ItemErrors {
   price?: string;
 }
 
-interface ItemsProps {
-  items: InvoiceItem[];
-  onItemsChange: (items: InvoiceItem[]) => void;
-}
-
-const Items = ({ items, onItemsChange }: ItemsProps) => {
-  const [errors, setErrors] = useState<{ [key: string]: ItemErrors }>({});
+const Items: React.FC<ItemsProps> = ({ items, currency, onItemsChange }) => {
+  const [errors, setErrors] = React.useState<{ [key: string]: ItemErrors }>({});
 
   const validateItem = (item: InvoiceItem): ItemErrors => {
     const errors: ItemErrors = {};
@@ -78,7 +73,8 @@ const Items = ({ items, onItemsChange }: ItemsProps) => {
   };
 
   const deleteItem = (id: string) => {
-    onItemsChange(items.filter(item => item.id !== id));
+    const updatedItems = items.filter(item => item.id !== id);
+    onItemsChange(updatedItems);
     setErrors(prev => {
       const newErrors = { ...prev };
       delete newErrors[id];
@@ -186,7 +182,7 @@ const Items = ({ items, onItemsChange }: ItemsProps) => {
                       onChange={(e) => updateItem(item.id, 'price', parseFloat(e.target.value) || 0)}
                       min="0"
                       step="0.01"
-                      placeholder="0.00"
+                      placeholder={`0.00 ${currency.code}`}
                       className={errors[item.id]?.price ? 'has-error' : ''}
                     />
                   </div>

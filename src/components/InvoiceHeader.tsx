@@ -1,18 +1,9 @@
+import React from 'react';
+import type { InvoiceHeaderProps, HeaderInfo } from '../types/interfaces';
 import '../styles/InvoiceHeader.scss';
 
-interface InvoiceHeaderInfo {
-  invoiceNumber: string;
-  invoiceDate: string;
-  dueDate: string;
-}
-
-interface InvoiceHeaderProps {
-  headerInfo: InvoiceHeaderInfo;
-  onHeaderInfoChange: (info: InvoiceHeaderInfo) => void;
-}
-
-const InvoiceHeader = ({ headerInfo, onHeaderInfoChange }: InvoiceHeaderProps) => {
-  const handleChange = (field: keyof InvoiceHeaderInfo, value: string) => {
+const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ headerInfo, onHeaderInfoChange }) => {
+  const handleChange = (field: keyof HeaderInfo, value: string) => {
     onHeaderInfoChange({
       ...headerInfo,
       [field]: value
@@ -29,6 +20,7 @@ const InvoiceHeader = ({ headerInfo, onHeaderInfoChange }: InvoiceHeaderProps) =
             id="invoiceNumber"
             value={headerInfo.invoiceNumber}
             onChange={(e) => handleChange('invoiceNumber', e.target.value)}
+            placeholder="INV-001"
           />
         </div>
         <div className="form-group">
