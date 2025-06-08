@@ -20,7 +20,7 @@ const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ headerInfo, onHeaderInfoC
             id="invoiceNumber"
             value={headerInfo.invoiceNumber}
             onChange={(e) => handleChange('invoiceNumber', e.target.value)}
-            placeholder="INV-001"
+            placeholder="INV-0001"
           />
         </div>
         <div className="form-group">
